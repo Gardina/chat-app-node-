@@ -5,10 +5,6 @@ socket.on('connect', function() {
     'connected to sever'
   );
 
-	socket.emit('createMessage', {
-		from: 'Kolyan',
-		text: 'halo'
-	});
 });
 
 socket.on('disconnect', function () {
