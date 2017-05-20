@@ -15,7 +15,7 @@ describe('generateMessage', () => {
 
 describe('generateLocationMessage', () => {
 	it('sjoud generate correct location object', () => {
-		var from = 'admin';
+		var from = 'valerich';
 		var lat = 1234;
 		var lon = 5678;
 		var res = generateLocationMessage(from, lat, lon);
