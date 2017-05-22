@@ -33,6 +33,10 @@ socket.on('disconnect', function () {
 	console.log('Disconnected from server');
 });
 
+socket.on('addRoom', function(room) {
+	console.log(room);
+});
+
 socket.on('updateUserList', function (users) {
 	var ol = jQuery('<ol></ol>');
 

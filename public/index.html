@@ -21,17 +21,23 @@
     </div>
     <div class="form-field">
       <label>Room Name</label>
-      <input type="text" name="room"/>
+      <input list="rooms" type="text" name="room" />
+      <datalist id="rooms" >
+      </datalist>
     </div>
     <div class="form-field">
       <button>Join</button>
     </div>
   </form>
   </div>
+  <script id="roomlist-template" type="text/template">
+      <option value={{room}}>
+  </script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/libs/jquery-3.2.1.min.js"></script>
   <script src="/js/libs/moment.js"></script>
   <script src="/js/libs/mustache.js"></script>
+  <script src="/js/index.js"></script>
 </body>
 
 </html>

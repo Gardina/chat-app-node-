@@ -10,4 +10,12 @@ var isUniqueUser = (users, name, room) => {
 	}
 };
 
-module.exports ={isRealString, isUniqueUser};
+var isNewRoom = (rooms, room) => {
+	if(rooms.filter((existingRoom) => existingRoom === room).length === 0) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+module.exports ={isRealString, isUniqueUser, isNewRoom};
