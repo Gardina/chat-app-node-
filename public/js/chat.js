@@ -18,7 +18,7 @@ function scrollToBottom () {
 
 socket.on('connect', function () {
 	var params = jQuery.deparam(window.location.search);
-	params.room = params.room.toLowerCase();
+	params.room = params.room.toLowerCase().trim();
 	socket.emit('join', params, function (err) {
 		if (err) {
 			alert(err);
@@ -60,7 +60,7 @@ socket.on('newLocationMessage', function (message) {
 	var formattedTime = moment(message.createdAt).format('h:mm a');
 	var template = jQuery('#location-message-template').html();
 	var html = Mustache.render(template, {
-		from: message.from, 
+		from: message.from,
 		url: message.url,
 		createdAt: formattedTime
 	});
