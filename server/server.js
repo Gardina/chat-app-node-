@@ -36,9 +36,9 @@ io.on('connection', (socket) => {
 		users.removeUser(socket.id);
 		users.addUser(socket.id, params.name, params.room);
 		if (!rooms.getRoomByName(params.room)) {
-			rooms.addRoom(socket.id, params.room);
-			socket.emit('addRoom', params.room);
-		} else {rooms.addUserRoom(params.room);}
+			rooms.createRoom(socket.id, params.room);
+			socket.emit('createRoom', params.room);
+		} else {rooms.addSocket(socket.id, sparams.room);}
 
 		io.to(params.room).emit('updateUserList', users.getUserList(params.room));
 		socket.emit('newMessage', generateMessage('Admin', `Welcome to chat ${params.name}`));
@@ -66,12 +66,22 @@ io.on('connection', (socket) => {
 
 	socket.on('disconnect', () => {
 		var user = users.removeUser(socket.id);
-
+		var room = rooms.getRoom(socket.id);
 		if (user) {
 			io.to(user.room).emit('updateUserList', users.getUserList(user.room));
 			io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left.`));
+		} else {
+			users.addUser(socket.id);
 		}
-		rooms.removeRoom(socket.id);
+		if (room) {
+			rooms.removeSocket(socket.id);
+			if (room.sockets.length <= 0) {
+				socket.emit('removeRoom', room);
+				rooms.removeRoom(socket.id);
+			}
+		} else {
+			alert(err);
+		}
 
 	});
 });

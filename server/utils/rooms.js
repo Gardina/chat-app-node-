@@ -1,37 +1,41 @@
-const {Users} = require('./users.js');
-
 class Rooms {
 	constructor() {
 		this.rooms = [];
 	}
-	addRoom (id, roomName) {
-		var room = {roomName, id, users: 0};
+	createRoom (id, roomName) {
+		var room = {
+			sockets: [id],
+			roomName
+		};
 		this.rooms.push(room);
 		return room;
 	}
-	addUserRoom (roomName) {
+	addSocket (id, roomName) {
 		var room = this.getRoomByName(roomName);
-		if (room){
-			room.users += 1;
-		}
+		room.sockets.push(id);
 		return room;
 	}
 	removeRoom (id) {
 		var room =this.getRoom(id);
 		if (room) {
-			this.rooms = this.rooms.filter((existingRoom) => existingRoom !== room);
+			this.rooms = this.rooms.filter((existingRoom) => existingRoom.roomName !== room.roomName);
 		}
 		return room;
 	}
-	removeUserRoom (roomName) {
+	removeSocket (id, roomName) {
 		var room = this.getRoomByName(roomName);
-		if (room) {
-			room.users -=1;
-		}
+		var i = room.sockets.indexOf(id);
+		room.sockets.splice(i, 1);
 		return room;
 	}
 	getRoom (id) {
-		return this.rooms.filter((room) => room.id === id)[0];
+		function checkId (room) {
+			if (room.sockets.indexOf(id) === -1){
+				return false;
+			} else {
+				return true; }
+		}
+		return this.rooms.filter(checkId)[0];
 	}
 	getRoomByName (roomName) {
 		return this.rooms.filter((room) => room.roomName === roomName)[0];

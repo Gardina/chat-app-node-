@@ -12,7 +12,7 @@ socket.on('listRooms', function(rooms) {
 	}
 });
 
-socket.on('addRoom', function(room) {
+socket.on('createRoom', function(room) {
 	console.log(room);
 	var template = jQuery('#roomlist-template').html();
 	var html = Mustache.render(template, {
